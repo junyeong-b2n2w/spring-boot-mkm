@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://localhost:13306/mkm
+    username: mkm
+    password: mkm1@3
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+logging:
+  pattern:
+    console: "[%d{HH:mm:ss.SSS}][%-5level][%logger.%method:line%line] - %msg%n"
+  level:
+    org:
+     springframework: DEBUG
+
+#jwt
+jwt:
+  secret: secretkey123123
+  access-expired: 1800
