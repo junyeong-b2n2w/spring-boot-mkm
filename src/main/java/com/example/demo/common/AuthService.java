@@ -1,6 +1,5 @@
 package com.example.demo.common;
 
-import com.example.demo.MemberRepository;
 import com.example.demo.common.domain.Member;
 import com.example.demo.common.dto.JwtRequestDto;
 import com.example.demo.common.dto.JwtResponseDto;
@@ -15,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
 @Service
@@ -34,6 +34,12 @@ public class AuthService {
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
 
         return createJwtToken(authentication);
+    }
+
+    public JwtResponseDto user(HttpServletRequest request) throws Exception {
+        String token = jwtTokenProvider.resolveToken(request);
+        String pk = String.valueOf(jwtTokenProvider.getAuthentication(token));
+        return new JwtResponseDto("12");
     }
 
     private JwtResponseDto createJwtToken(Authentication authentication){

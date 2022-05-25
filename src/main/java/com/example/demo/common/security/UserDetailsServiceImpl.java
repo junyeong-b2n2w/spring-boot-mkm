@@ -1,6 +1,6 @@
 package com.example.demo.common.security;
 
-import com.example.demo.MemberRepository;
+import com.example.demo.common.MemberRepository;
 import com.example.demo.common.domain.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

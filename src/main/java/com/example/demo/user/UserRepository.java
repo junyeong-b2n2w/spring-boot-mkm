@@ -1,7 +1,7 @@
-package com.example.demo;
+package com.example.demo.user;
 
 import com.example.demo.common.domain.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface MemberRepository extends JpaRepository<Member, String> {
+public interface UserRepository extends JpaRepository<Member, String> {
 }

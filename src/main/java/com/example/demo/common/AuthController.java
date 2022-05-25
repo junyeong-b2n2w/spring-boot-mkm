@@ -5,10 +5,9 @@ import com.example.demo.common.dto.JwtResponseDto;
 import com.example.demo.common.dto.MemberSignupRequestDto;
 import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/auth")
@@ -26,6 +25,17 @@ public class AuthController {
             return new JwtResponseDto(e.getMessage());
         }
     }
+
+
+    @GetMapping(value = "user", produces = MediaType.APPLICATION_JSON_VALUE)
+    public JwtResponseDto user(HttpServletRequest request) {
+        try {
+            return authService.user(request);
+        } catch (Exception e) {
+            return new JwtResponseDto(e.getMessage());
+        }
+    }
+
 
     @PostMapping(value = "signup", produces = MediaType.APPLICATION_JSON_VALUE)
     public String signup(@RequestBody MemberSignupRequestDto request) {
