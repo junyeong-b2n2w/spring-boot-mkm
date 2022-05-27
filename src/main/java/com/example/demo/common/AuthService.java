@@ -7,6 +7,7 @@ import com.example.demo.common.dto.MemberSignupRequestDto;
 import com.example.demo.common.security.JwtTokenProvider;
 import com.example.demo.common.security.UserDetailsImpl;
 
+import com.example.demo.common.util.SecurityUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -36,12 +38,6 @@ public class AuthService {
         return createJwtToken(authentication);
     }
 
-    public JwtResponseDto user(HttpServletRequest request) throws Exception {
-        String token = jwtTokenProvider.resolveToken(request);
-        String pk = String.valueOf(jwtTokenProvider.getAuthentication(token));
-        return new JwtResponseDto("12");
-    }
-
     private JwtResponseDto createJwtToken(Authentication authentication){
         UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
         String token = jwtTokenProvider.generateToken(principal);
@@ -60,4 +56,15 @@ public class AuthService {
         memberRepository.save(member);
         return member.getEmail();
     }
+
+
+    public Optional<Member> getMemberWithAuthorities(String email){
+        return memberRepository.findOneWithAuthoritiesByEmail(email);
+    }
+
+
+    public Optional<Member> getMyMemberWithAuthorities(){
+        return SecurityUtil.getCurrentUsername().flatMap(memberRepository::findOneWithAuthoritiesByEmail);
+    }
+
 }

@@ -35,4 +35,8 @@ public class Member {
     public void encryptPassword(PasswordEncoder passwordEncoder){
         password = passwordEncoder.encode(password);
     }
+
+    public void removePasword(){
+        this.password = "";
+    }
 }

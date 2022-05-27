@@ -7,10 +7,10 @@ spring:
   jpa:
     hibernate:
       ddl-auto: none
-    show-sql: true
     properties:
       hibernate:
         format_sql: true
+        show-sql: true
 
 logging:
   pattern:
@@ -21,5 +21,6 @@ logging:
 
 #jwt
 jwt:
+  header: Authorization
   secret: secretkey123123
   access-expired: 1800
