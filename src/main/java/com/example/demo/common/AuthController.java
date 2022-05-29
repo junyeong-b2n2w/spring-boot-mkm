@@ -10,6 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/auth")
 @AllArgsConstructor
@@ -29,18 +32,22 @@ public class AuthController {
 
     @GetMapping(value = "user", produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    public ResponseEntity<Member> getMyMemberInfo() {
+    public  ResponseEntity<Map<String,Object>> getMyMemberInfo() {
         Member member = authService.getMyMemberWithAuthorities().get();
         member.removePasword();
-        return ResponseEntity.ok(member);
+        Map<String,Object> map =  new HashMap<String, Object>();
+        map.put("user", member);
+        return ResponseEntity.ok(map);
     }
 
     @GetMapping(value = "user/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAnyRole('ADMIN')")
-    public ResponseEntity<Member> getMemberInfo(@PathVariable String email) {
+    public ResponseEntity<Map<String,Object>> getMemberInfo(@PathVariable String email) {
         Member member = authService.getMemberWithAuthorities(email).get();
         member.removePasword();
-        return ResponseEntity.ok(member);
+        Map<String,Object> map =  new HashMap<String, Object>();
+        map.put("user", member);
+        return ResponseEntity.ok(map);
     }
 
     @PostMapping(value = "signup", produces = MediaType.APPLICATION_JSON_VALUE)
